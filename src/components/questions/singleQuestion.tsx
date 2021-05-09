@@ -3,6 +3,7 @@ import { Utils } from "../../utils";
 import { QuestionsProps } from "../../models/props/questionsProps";
 
 const SingleQuestion = (props: QuestionsProps) => {
+  
   const { question, showQuestionDetails } = props;
 
   return (

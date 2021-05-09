@@ -8,8 +8,9 @@ import QuestionDetails from "./questionDetails";
 import SingleQuestion from "./singleQuestion";
 
 class Questions extends React.Component<QuestionsProps, QuestionsState> {
-  loadingRef: any = React.createRef();
-  observer: any;
+ 
+  loadingRef: React.RefObject<HTMLDivElement> = React.createRef();
+  observer: IntersectionObserver;
   state = {
     questions: [],
     hasMoreData: false,
@@ -50,7 +51,6 @@ class Questions extends React.Component<QuestionsProps, QuestionsState> {
     this.setScrollObserver();
   };
 
-
   setScrollObserver = (): void => {
     var options = {
       root: null,
@@ -59,9 +59,9 @@ class Questions extends React.Component<QuestionsProps, QuestionsState> {
     };
     this.observer = new IntersectionObserver(this.handleObserver, options);
     this.observer.observe(this.loadingRef.current);
-  }
+  };
 
-  handleObserver = (entities, observer):void => {
+  handleObserver = (entities, observer): void => {
     const y = entities[0].boundingClientRect.y;
     if (this.state.prevY > y) {
       const curPage = this.state.page + 1;
@@ -72,6 +72,7 @@ class Questions extends React.Component<QuestionsProps, QuestionsState> {
   };
 
   getQuestions = async (page): Promise<null | void> => {
+    
     this.setState({ loading: true });
 
     try {
@@ -100,7 +101,6 @@ class Questions extends React.Component<QuestionsProps, QuestionsState> {
       ...question,
       ...{ hidePopup: this.hidePopup, showPopup: true },
     };
-
     this.setState({ showDetails: true, questionDetails });
   };
 
