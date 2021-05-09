@@ -132,6 +132,7 @@ class Questions extends React.Component<QuestionsProps, QuestionsState> {
           {questions.map((question: Question) => {
             return (
               <SingleQuestion
+              key={question.question_id}
                 question={question}
                 showQuestionDetails={this.showQuestionDetails}
               />
