@@ -8,7 +8,6 @@ import QuestionDetails from "./questionDetails";
 import SingleQuestion from "./singleQuestion";
 
 class Questions extends React.Component<QuestionsProps, QuestionsState> {
- 
   loadingRef: React.RefObject<HTMLDivElement> = React.createRef();
   observer: IntersectionObserver;
   state = {
@@ -72,7 +71,6 @@ class Questions extends React.Component<QuestionsProps, QuestionsState> {
   };
 
   getQuestions = async (page): Promise<null | void> => {
-    
     this.setState({ loading: true });
 
     try {
@@ -132,7 +130,7 @@ class Questions extends React.Component<QuestionsProps, QuestionsState> {
           {questions.map((question: Question) => {
             return (
               <SingleQuestion
-              key={question.question_id}
+                key={question.question_id}
                 question={question}
                 showQuestionDetails={this.showQuestionDetails}
               />
