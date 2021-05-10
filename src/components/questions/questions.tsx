@@ -10,6 +10,7 @@ import SingleQuestion from "./singleQuestion";
 class Questions extends React.Component<QuestionsProps, QuestionsState> {
   loadingRef: React.RefObject<HTMLDivElement> = React.createRef();
   observer: IntersectionObserver;
+
   state = {
     questions: [],
     hasMoreData: false,
@@ -40,6 +41,7 @@ class Questions extends React.Component<QuestionsProps, QuestionsState> {
       content_license: "",
       link: "",
       title: "",
+      body: "",
       hidePopup: () => {},
       showPopup: false,
     },
@@ -76,7 +78,7 @@ class Questions extends React.Component<QuestionsProps, QuestionsState> {
     try {
       const response: GetQuestionsResponse = (
         await api.get(
-          `questions?key=${process.env.REACT_APP_API_KEY}&site=stackoverflow&page=${page}&pagesize=${this.state.pageSize}&order=desc&sort=activity&filter=default`
+          `questions?key=${process.env.REACT_APP_API_KEY}&site=stackoverflow&page=${page}&pagesize=${this.state.pageSize}&order=desc&sort=activity&filter=&filter=!nMp.SvMbcA`
         )
       ).data;
 
@@ -94,9 +96,11 @@ class Questions extends React.Component<QuestionsProps, QuestionsState> {
     this.setState({ showDetails: false });
   };
 
-  showQuestionDetails = (question: Question): void => {
+  showQuestionDetails = ({ title, link, body }: Question): void => {
     const questionDetails: QuestionDetailsProps = {
-      ...question,
+      title,
+      link,
+      body,
       ...{ hidePopup: this.hidePopup, showPopup: true },
     };
     this.setState({ showDetails: true, questionDetails });
